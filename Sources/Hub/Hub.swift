@@ -229,7 +229,9 @@ public class LanguageModelConfigurationFromHub {
     ) async throws -> Configurations {
         let modelFolder = URL(fileURLWithPath: "./minicpm")  // 指定本地模型文件夹路径
         print("---------------模型路径--------------")
-        print(modelFolder)
+        let fileManager = FileManager.default
+        let files = try fileManager.contentsOfDirectory(atPath: modelFolder.path)
+        print("Files in modelFolder: \(files)")
         print("---------------模型路径--------------")
         let modelConfig = try hubApi.configuration(fileURL: modelFolder.appending(path: "config.json"))
         let tokenizerConfig = try? hubApi.configuration(fileURL: modelFolder.appending(path: "tokenizer_config.json"))
