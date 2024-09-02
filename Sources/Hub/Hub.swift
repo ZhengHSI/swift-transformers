@@ -188,22 +188,36 @@ public class LanguageModelConfigurationFromHub {
         }
     }
 
-    func loadConfig(
-        modelName: String,
-        hubApi: HubApi = .shared
-    ) async throws -> Configurations {
-        let filesToDownload = ["config.json", "tokenizer_config.json", "tokenizer.json"]
-        let repo = Hub.Repo(id: modelName)
-        let downloadedModelFolder = try await hubApi.snapshot(from: repo, matching: filesToDownload)
+    // func loadConfig(
+    //     modelName: String,
+    //     hubApi: HubApi = .shared
+    // ) async throws -> Configurations {
+    //     let filesToDownload = ["config.json", "tokenizer_config.json", "tokenizer.json"]
+    //     let repo = Hub.Repo(id: modelName)
+    //     let downloadedModelFolder = try await hubApi.snapshot(from: repo, matching: filesToDownload)
 
-        return try await loadConfig(modelFolder: downloadedModelFolder, hubApi: hubApi)
-    }
+    //     return try await loadConfig(modelFolder: downloadedModelFolder, hubApi: hubApi)
+    // }
     
-    func loadConfig(
-        modelFolder: URL,
-        hubApi: HubApi = .shared
-    ) async throws -> Configurations {
-        // Note tokenizerConfig may be nil (does not exist in all models)
+    // func loadConfig(
+    //     modelFolder: URL,
+    //     hubApi: HubApi = .shared
+    // ) async throws -> Configurations {
+    //     // Note tokenizerConfig may be nil (does not exist in all models)
+    //     let modelConfig = try hubApi.configuration(fileURL: modelFolder.appending(path: "config.json"))
+    //     let tokenizerConfig = try? hubApi.configuration(fileURL: modelFolder.appending(path: "tokenizer_config.json"))
+    //     let tokenizerVocab = try hubApi.configuration(fileURL: modelFolder.appending(path: "tokenizer.json"))
+        
+    //     let configs = Configurations(
+    //         modelConfig: modelConfig,
+    //         tokenizerConfig: tokenizerConfig,
+    //         tokenizerData: tokenizerVocab
+    //     )
+    //     return configs
+    // }
+
+    func loadConfig() async throws -> Configurations {
+        let modelFolder = URL(fileURLWithPath: "./minicpm")  // 指定本地模型文件夹路径
         let modelConfig = try hubApi.configuration(fileURL: modelFolder.appending(path: "config.json"))
         let tokenizerConfig = try? hubApi.configuration(fileURL: modelFolder.appending(path: "tokenizer_config.json"))
         let tokenizerVocab = try hubApi.configuration(fileURL: modelFolder.appending(path: "tokenizer.json"))

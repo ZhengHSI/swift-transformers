@@ -28,5 +28,6 @@
     "vocab_size": 73440,
     "scale_emb": 12,
     "dim_model_base": 256,
-    "scale_depth": 1.4
+    "scale_depth": 1.4,
+    "modelType": "minicpm"
 }
