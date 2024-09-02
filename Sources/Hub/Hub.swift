@@ -227,14 +227,10 @@ public class LanguageModelConfigurationFromHub {
         modelFolder: URL,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
-        let modelType = "minicpm"
-        guard let url = Bundle.main.url(forResource: "\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
-            throw NSError(domain: "Hub", code: 1, userInfo: [NSLocalizedDescriptionKey: "minicpm 文件夹未找到"])
-        }
 
-        let modelConfigURL = modelFolderURL.appendingPathComponent("config.json")
-        let tokenizerConfigURL = modelFolderURL.appendingPathComponent("tokenizer_config.json")
-        let tokenizerVocabURL = modelFolderURL.appendingPathComponent("tokenizer.json")
+        let modelConfigURL = Bundle.main.url(forResource: "config", withExtension: "json") else { return nil }
+        let tokenizerConfigURL = Bundle.main.url(forResource: "tokenizer_config", withExtension: "json") else { return nil }
+        let tokenizerVocabURL = Bundle.main.url(forResource: "tokenizer", withExtension: "json") else { return nil }
 
         let modelConfig = try hubApi.configuration(fileURL: modelConfigURL)
         let tokenizerConfig = try? hubApi.configuration(fileURL: tokenizerConfigURL)
@@ -249,7 +245,7 @@ public class LanguageModelConfigurationFromHub {
     }
 
     static func fallbackTokenizerConfig(for modelType: String) -> Config? {
-        guard let url = Bundle.main.url(forResource: "FallbackConfigs/\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
+        guard let url = Bundle.main.url(forResource: "\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
         do {
             let data = try Data(contentsOf: url)
             let parsed = try JSONSerialization.jsonObject(with: data, options: [])
