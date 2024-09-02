@@ -227,7 +227,7 @@ public class LanguageModelConfigurationFromHub {
         modelFolder: URL,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
-        guard let modelFolderURL = Bundle.module.url(forResource: "minicpm", withExtension: nil) else {
+        guard let modelFolderURL = Bundle.module.url(forResource: "FallbackConfigs", withExtension: nil) else {
             throw NSError(domain: "Hub", code: 1, userInfo: [NSLocalizedDescriptionKey: "minicpm 文件夹未找到"])
         }
 
