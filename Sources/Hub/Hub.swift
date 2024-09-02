@@ -227,7 +227,7 @@ public class LanguageModelConfigurationFromHub {
         modelFolder: URL,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
-        guard let modelFolderURL = Bundle.module.url(forResource: "minicpm", withExtension: nil) else {
+        guard let modelFolderURL = Bundle.main.url(forResource: "minicpm", withExtension: nil) else {
             throw NSError(domain: "Hub", code: 1, userInfo: [NSLocalizedDescriptionKey: "minicpm 文件夹未找到"])
         }
 
@@ -248,7 +248,7 @@ public class LanguageModelConfigurationFromHub {
     }
 
     static func fallbackTokenizerConfig(for modelType: String) -> Config? {
-        guard let url = Bundle.module.url(forResource: "FallbackConfigs/\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
+        guard let url = Bundle.main.url(forResource: "FallbackConfigs/\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
         do {
             let data = try Data(contentsOf: url)
             let parsed = try JSONSerialization.jsonObject(with: data, options: [])
