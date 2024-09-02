@@ -227,10 +227,10 @@ public class LanguageModelConfigurationFromHub {
         modelFolder: URL,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
-
-        let modelConfigURL = Bundle.main.url(forResource: "config", withExtension: "json")!
-        let tokenizerConfigURL = Bundle.main.url(forResource: "tokenizer_config", withExtension: "json")!
-        let tokenizerVocabURL = Bundle.main.url(forResource: "tokenizer", withExtension: "json")!
+        
+        let modelConfigURL = Bundle.module.url(forResource: "config", withExtension: "json")!
+        let tokenizerConfigURL = Bundle.module.url(forResource: "tokenizer_config", withExtension: "json")!
+        let tokenizerVocabURL = Bundle.module.url(forResource: "tokenizer", withExtension: "json")!
 
         let modelConfig = try hubApi.configuration(fileURL: modelConfigURL)
         let tokenizerConfig = try? hubApi.configuration(fileURL: tokenizerConfigURL)
@@ -245,7 +245,7 @@ public class LanguageModelConfigurationFromHub {
     }
 
     static func fallbackTokenizerConfig(for modelType: String) -> Config? {
-        guard let url = Bundle.main.url(forResource: "\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
+        guard let url = Bundle.module.url(forResource: "\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
         do {
             let data = try Data(contentsOf: url)
             let parsed = try JSONSerialization.jsonObject(with: data, options: [])
