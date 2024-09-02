@@ -220,7 +220,7 @@ public class LanguageModelConfigurationFromHub {
         modelName: String,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
-        return try await loadConfig(modelFolder: "./minicpm", hubApi: hubApi)
+        return try await loadConfig(modelFolder: URL(fileURLWithPath: "./minicpm"), hubApi: hubApi)
     }
     
     func loadConfig(
