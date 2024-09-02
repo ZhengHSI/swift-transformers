@@ -227,7 +227,8 @@ public class LanguageModelConfigurationFromHub {
         modelFolder: URL,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
-        guard let modelFolderURL = Bundle.module.url(forResource: "\(minicpm)", withExtension: nil) else {
+        modelType = "minicpm"
+        guard let url = Bundle.main.url(forResource: "\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
             throw NSError(domain: "Hub", code: 1, userInfo: [NSLocalizedDescriptionKey: "minicpm 文件夹未找到"])
         }
 
