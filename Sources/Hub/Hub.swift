@@ -227,12 +227,7 @@ public class LanguageModelConfigurationFromHub {
         modelFolder: URL,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
-        let modelFolder = URL(fileURLWithPath: "./minicpm")  // 指定本地模型文件夹路径
-        print("---------------模型路径--------------")
-        let fileManager = FileManager.default
-        let files = try fileManager.contentsOfDirectory(atPath: modelFolder.path)
-        print("Files in modelFolder: \(files)")
-        print("---------------模型路径--------------")
+        let modelFolder = Bundle.module.url(forResource: "minicpm", withExtension: "json") else { return nil }
         let modelConfig = try hubApi.configuration(fileURL: modelFolder.appending(path: "config.json"))
         let tokenizerConfig = try? hubApi.configuration(fileURL: modelFolder.appending(path: "tokenizer_config.json"))
         let tokenizerVocab = try hubApi.configuration(fileURL: modelFolder.appending(path: "tokenizer.json"))
@@ -246,7 +241,7 @@ public class LanguageModelConfigurationFromHub {
     }
 
     static func fallbackTokenizerConfig(for modelType: String) -> Config? {
-        guard let url = Bundle.module.url(forResource: "\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
+        guard let url = Bundle.module.url(forResource: "FallbackConfigs\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
         do {
             let data = try Data(contentsOf: url)
             let parsed = try JSONSerialization.jsonObject(with: data, options: [])
