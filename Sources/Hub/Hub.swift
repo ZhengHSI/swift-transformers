@@ -228,9 +228,9 @@ public class LanguageModelConfigurationFromHub {
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
 
-        let modelConfigURL = Bundle.main.url(forResource: "config", withExtension: "json") else { return nil }
-        let tokenizerConfigURL = Bundle.main.url(forResource: "tokenizer_config", withExtension: "json") else { return nil }
-        let tokenizerVocabURL = Bundle.main.url(forResource: "tokenizer", withExtension: "json") else { return nil }
+        guard let modelConfigURL = Bundle.main.url(forResource: "config", withExtension: "json") else { return nil }
+        guard let tokenizerConfigURL = Bundle.main.url(forResource: "tokenizer_config", withExtension: "json") else { return nil }
+        guard let tokenizerVocabURL = Bundle.main.url(forResource: "tokenizer", withExtension: "json") else { return nil }
 
         let modelConfig = try hubApi.configuration(fileURL: modelConfigURL)
         let tokenizerConfig = try? hubApi.configuration(fileURL: tokenizerConfigURL)
