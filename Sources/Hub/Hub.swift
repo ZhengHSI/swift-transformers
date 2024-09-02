@@ -227,14 +227,17 @@ public class LanguageModelConfigurationFromHub {
         modelFolder: URL,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
-        guard let modelFolder1 = Bundle.module.url(forResource: "minicpm/\(config)", withExtension: "json") else { return nil }
-        let modelConfig = try hubApi.configuration(fileURL: modelFolder1)
+        guard let modelFolderURL = Bundle.module.url(forResource: "minicpm", withExtension: nil) else {
+            throw NSError(domain: "Hub", code: 1, userInfo: [NSLocalizedDescriptionKey: "minicpm 文件夹未找到"])
+        }
 
-        guard let modelFolder2 = Bundle.module.url(forResource: "minicpm/\(tokenizer_config)", withExtension: "json") else { return nil }
-        let tokenizerConfig = try? hubApi.configuration(fileURL: modelFolder2)
+        let modelConfigURL = modelFolderURL.appendingPathComponent("config.json")
+        let tokenizerConfigURL = modelFolderURL.appendingPathComponent("tokenizer_config.json")
+        let tokenizerVocabURL = modelFolderURL.appendingPathComponent("tokenizer.json")
 
-        guard let modelFolder3 = Bundle.module.url(forResource: "minicpm/\(tokenizer)", withExtension: "json") else { return nil }
-        let tokenizerVocab = try hubApi.configuration(fileURL: modelFolder3)
+        let modelConfig = try hubApi.configuration(fileURL: modelConfigURL)
+        let tokenizerConfig = try? hubApi.configuration(fileURL: tokenizerConfigURL)
+        let tokenizerVocab = try hubApi.configuration(fileURL: tokenizerVocabURL)
 
         let configs = Configurations(
             modelConfig: modelConfig,
@@ -245,7 +248,7 @@ public class LanguageModelConfigurationFromHub {
     }
 
     static func fallbackTokenizerConfig(for modelType: String) -> Config? {
-        guard let url = Bundle.module.url(forResource: "FallbackConfigs/\((modelType)_tokenizer_config)", withExtension: "json") else { return nil }
+        guard let url = Bundle.module.url(forResource: "FallbackConfigs/\(modelType)_tokenizer_config", withExtension: "json") else { return nil }
         do {
             let data = try Data(contentsOf: url)
             let parsed = try JSONSerialization.jsonObject(with: data, options: [])
