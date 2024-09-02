@@ -136,14 +136,14 @@ public class LanguageModelConfigurationFromHub {
         }
     }
     
-    public init(
-        modelFolder: URL,
-        hubApi: HubApi = .shared
-    ) {
-        self.configPromise = Task {
-            return try await self.loadConfig(modelFolder: modelFolder, hubApi: hubApi)
-        }
-    }
+    // public init(
+    //     modelFolder: URL,
+    //     hubApi: HubApi = .shared
+    // ) {
+    //     self.configPromise = Task {
+    //         return try await self.loadConfig(modelFolder: modelFolder, hubApi: hubApi)
+    //     }
+    // }
 
     public var modelConfig: Config {
         get async throws {
