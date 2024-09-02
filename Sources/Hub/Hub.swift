@@ -136,14 +136,14 @@ public class LanguageModelConfigurationFromHub {
         }
     }
     
-    // public init(
-    //     modelFolder: URL,
-    //     hubApi: HubApi = .shared
-    // ) {
-    //     self.configPromise = Task {
-    //         return try await self.loadConfig(modelFolder: modelFolder, hubApi: hubApi)
-    //     }
-    // }
+    public init(
+        modelFolder: URL,
+        hubApi: HubApi = .shared
+    ) {
+        self.configPromise = Task {
+            return try await self.loadConfig(modelFolder: modelFolder, hubApi: hubApi)
+        }
+    }
 
     public var modelConfig: Config {
         get async throws {
@@ -218,6 +218,13 @@ public class LanguageModelConfigurationFromHub {
 
     func loadConfig(
         modelName: String,
+        hubApi: HubApi = .shared
+    ) async throws -> Configurations {
+        return try await loadConfig(modelFolder: "./minicpm", hubApi: hubApi)
+    }
+    
+    func loadConfig(
+        modelFolder: URL,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
         let modelFolder = URL(fileURLWithPath: "./minicpm")  // 指定本地模型文件夹路径
