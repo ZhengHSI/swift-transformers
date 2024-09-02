@@ -11,11 +11,12 @@ from export import METADATA_TOKENIZER
 def load(model_path: str) -> Tuple[MLModel, AutoTokenizer]:
     """Load a Core ML model and corresponding tokenizer."""
     model: MLModel = MLModel(model_path)
-    description = model.get_spec().description
-    if METADATA_TOKENIZER not in description.metadata.userDefined:
-        raise ValueError("Model metadata does not contain tokenizer path.")
-    tokenizer_path: str = description.metadata.userDefined[METADATA_TOKENIZER]
-    tokenizer: AutoTokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
+    # description = model.get_spec().description
+    # if METADATA_TOKENIZER not in description.metadata.userDefined:
+    #     raise ValueError("Model metadata does not contain tokenizer path.")
+    # tokenizer_path: str = description.metadata.userDefined[METADATA_TOKENIZER]
+    # tokenizer: AutoTokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
+    tokenizer: AutoTokenizer = AutoTokenizer.from_pretrained('./minicpm')
     return model, tokenizer
 
 
