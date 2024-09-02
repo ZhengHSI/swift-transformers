@@ -217,7 +217,7 @@ public class LanguageModelConfigurationFromHub {
     // }
 
     func loadConfig(
-        modelFolder: URL,
+        modelName: URL,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
         let modelFolder = URL(fileURLWithPath: "./minicpm")  // 指定本地模型文件夹路径
