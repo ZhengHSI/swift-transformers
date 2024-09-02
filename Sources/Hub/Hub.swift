@@ -227,7 +227,7 @@ public class LanguageModelConfigurationFromHub {
         modelFolder: URL,
         hubApi: HubApi = .shared
     ) async throws -> Configurations {
-        guard let modelFolder = Bundle.module.url(forResource: "minicpm", withExtension: "json") else { return nil }
+        let modelFolder = Bundle.module.url(forResource: "minicpm", withExtension: "json")
         let modelConfig = try hubApi.configuration(fileURL: modelFolder.appending(path: "config.json"))
         let tokenizerConfig = try? hubApi.configuration(fileURL: modelFolder.appending(path: "tokenizer_config.json"))
         let tokenizerVocab = try hubApi.configuration(fileURL: modelFolder.appending(path: "tokenizer.json"))
